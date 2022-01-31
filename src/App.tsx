@@ -1,24 +1,58 @@
-import React from 'react';
+import React, { useReducer, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { useSelector,useDispatch } from 'react-redux';
+import { RootState } from './app/store';
+import ReservationCard from "./components/ReservationCard";
+import { addReservation } from './features/reservationSlice';
+import CustomerCard from './components/CustomerCard';
+import {v4 as uuid} from "uuid";
 
-function App() {
+const App: React.FC = () => {
+
+ const reservations = useSelector((state:RootState) => state.reservations.value);
+ const customers = useSelector((state: RootState) => state.customer.value);
+ const dispath = useDispatch();
+ const [reservationInputName,setReservationNameInput] = useState<string>("");
+ const handleAddReservation = () => {
+   if(!reservationInputName) return;
+   dispath(addReservation(reservationInputName));
+   setReservationNameInput("");
+ }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+        <div className="reservation-container">
+          <div>
+            <h5 className="reservation-header">Reservations</h5>
+            <div className="reservation-cards-container">
+              {
+                reservations.map((name,index) =>  (
+                  <ReservationCard name={name} index={index} key={uuid()} />
+                ))
+              }
+            </div>
+          </div>
+          <div className="reservation-input-container">
+            <input value={reservationInputName}
+            onChange={(e) => setReservationNameInput(e.target.value)} />
+            <button onClick={handleAddReservation} 
+            className="btn btn-dark">Add</button>
+          </div>
+        </div>
+        <div className="customer-food-container">
+        {customers.map((customer) => {
+            return (
+              <CustomerCard
+                id={customer.id}
+                name={customer.name}
+                foods={customer.food}
+                key={customer.id}
+              />
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
