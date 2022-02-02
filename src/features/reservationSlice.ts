@@ -1,4 +1,5 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../app/store";
 interface ReservationState {
     value: string[]
 }
@@ -18,6 +19,8 @@ export const reservationsSlice = createSlice({
         }
     }
 })
+
+export const selectReservations = (state:RootState) => state.reservations.value;
 
 export const{addReservation,removeReservation} = reservationsSlice.actions;
 export default reservationsSlice.reducer;

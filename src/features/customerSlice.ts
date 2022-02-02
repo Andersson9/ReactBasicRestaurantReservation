@@ -1,4 +1,5 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../app/store";
 
 
 interface Customer {
@@ -39,6 +40,8 @@ interface Customer {
       },
     },
   });
+export const selectCustomers = (state:RootState) => state.customer.value;
+
 
 export const{addCustomer,addFoodToCustomer} = customerSlice.actions;
 export default customerSlice.reducer;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../app/hooks';
 import { addFoodToCustomer } from '../features/customerSlice';
 
 interface CustomerCardType{
@@ -10,7 +11,7 @@ interface CustomerCardType{
 
 const CustomerCard:React.FC<CustomerCardType> = ({id,name,foods}:CustomerCardType) => {
   
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [customerFoodInput,setcustomerFoodInput] = useState<string>("");
  
   return (

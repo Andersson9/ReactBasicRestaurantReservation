@@ -7,12 +7,16 @@ import ReservationCard from "./components/ReservationCard";
 import { addReservation } from './features/reservationSlice';
 import CustomerCard from './components/CustomerCard';
 import {v4 as uuid} from "uuid";
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { selectReservations } from './features/reservationSlice';
+import { selectCustomers } from './features/customerSlice';
+
 
 const App: React.FC = () => {
 
- const reservations = useSelector((state:RootState) => state.reservations.value);
- const customers = useSelector((state: RootState) => state.customer.value);
- const dispath = useDispatch();
+ const reservations = useAppSelector(selectReservations);
+ const customers = useAppSelector(selectCustomers);
+ const dispath = useAppDispatch();
  const [reservationInputName,setReservationNameInput] = useState<string>("");
  const handleAddReservation = () => {
    if(!reservationInputName) return;

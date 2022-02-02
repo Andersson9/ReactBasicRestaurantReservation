@@ -4,6 +4,7 @@ import { removeReservation } from '../features/reservationSlice';
 import "../App.css";
 import { addCustomer } from "../features/customerSlice";
 import {v4 as uuid} from "uuid";
+import { useAppDispatch } from "../app/hooks";
 
 interface ReservationCardType{
  name:string;
@@ -11,7 +12,7 @@ interface ReservationCardType{
 }
 
 const ReservationCard:React.FC<ReservationCardType> = ({name,index}:ReservationCardType) => {
-    const dispath = useDispatch();
+    const dispath = useAppDispatch();
     const handleDelete = () => {
         dispath(removeReservation(index)) 
         dispath(addCustomer({
